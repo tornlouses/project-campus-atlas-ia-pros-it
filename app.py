@@ -8,60 +8,60 @@ figure = px.pie(données, values='qte', names='region', title='quantité vendue 
 figure.write_html('ventes-par-region.html')
 print('ventes-par-région.html généré avec succès !')
 
-# Etape 7.a : Génération du graph ventes par produit
+# Etape 8.a : Génération du graph ventes par produit
 figure = px.pie(données, values='qte', names='produit', color_discrete_sequence=px.colors.qualitative.Pastel, title='quantité vendue par produit')
 figure.update_traces(textposition='inside', textinfo='value+percent+label')
 figure.write_html('ventes-par-produit.html')
-print('Etape 7.a : ventes-par-produit.html généré avec succès !')
+print('Etape 8.a : ventes-par-produit.html généré avec succès !')
 
-# Etape 7.b : Génération du graph chiffre d'affaires par produit
+# Etape 8.b : Génération du graph chiffre d'affaires par produit
 données["chiffre_affaires"] = données["prix"] * données["qte"]
 figure = px.pie(données, values='chiffre_affaires', names='produit', color_discrete_sequence=px.colors.qualitative.Pastel, title='chiffre d\'affaires par produit')
 figure.update_traces(textposition='inside', textinfo='value+percent+label')
 figure.write_html('chiffre-affaires-par-produit.html')
-print('Etape 7.b : chiffre-affaires-par-produit.html généré avec succès !')
+print('Etape 8.b : chiffre-affaires-par-produit.html généré avec succès !')
 
 
-# Etape 5.a : moyenne du chiffre d’affaires par produit
+# Etape 6.a : moyenne du chiffre d’affaires par produit
 moyenne_ca_produit = données.groupby("produit")["chiffre_affaires"].mean()
 #print(moyenne_ca_produit)
 
-# Etape 5.a : moyenne du volume des ventes par produit
+# Etape 6.a : moyenne du volume des ventes par produit
 moyenne_vente_produit = données.groupby("produit")["qte"].mean()
 
-# Etape 5.a : médiane du chiffre d’affaires par produit
+# Etape 6.a : médiane du chiffre d’affaires par produit
 mediane_ca_produit = données.groupby("produit")["chiffre_affaires"].median()
 #print(mediane_ca_produit)
 
-# Etape 5.a : médiane du volume des ventes par produit
+# Etape 6.a : médiane du volume des ventes par produit
 mediane_vente_produit = données.groupby("produit")["qte"].median()
 
-# Etape 5.a : Affichage propre
-resultat_5_a = pd.DataFrame({
+# Etape 6.a : Affichage propre
+resultat_6_a = pd.DataFrame({
     "moyenne_ca_produit": moyenne_ca_produit,
     "moyenne_vente_produit": moyenne_vente_produit,
     "mediane_ca_produit": mediane_ca_produit,
     "mediane_vente_produit": mediane_vente_produit
 })
-print("Etape 5.a : ", resultat_5_a)
+print("Etape 6.a : ", resultat_6_a)
 
-#Etape 5.b : écart type du volume des ventes par produit
+#Etape 6.b : écart type du volume des ventes par produit
 ecart_type_ventes_produit = données.groupby("produit")["qte"].std()
 
-# Etape 5.b : variance du volume des ventes par produit
+# Etape 6.b : variance du volume des ventes par produit
 variance_ventes_produit = données.groupby("produit")["qte"].var()
 
-# Etape 5.b : Affichage propre
-resultat_5_b = pd.DataFrame({
+# Etape 6.b : Affichage propre
+resultat_6_b = pd.DataFrame({
     "moyenne_vente_produit": moyenne_vente_produit,
     "mediane_vente_produit": mediane_vente_produit,
     "ecart_type_ventes_produit" : ecart_type_ventes_produit,
     "variance_ventes_produit" : variance_ventes_produit
 })
-print("Etape 5.b : ", resultat_5_b)
+print("Etape 6.b : ", resultat_6_b)
 
 
-# Etape 6 : sans pandas
+# Etape 7 : sans pandas
 import urllib.request
 import csv
 
@@ -94,4 +94,4 @@ for cle, valeur  in quantite_par_produit.items():
     elif valeur['quantite'] < min['quantite']:
         min = {'produit':cle,'quantite':valeur['quantite']}
 
-print("Etape 6 : Le produit le plus vendu est le produit "+max['produit']+" ("+str(max['quantite'])+"), tandis que le moins vendu est le produit "+min['produit']+" ("+str(min['quantite'])+")")
+print("Etape 7 : Le produit le plus vendu est le produit "+max['produit']+" ("+str(max['quantite'])+"), tandis que le moins vendu est le produit "+min['produit']+" ("+str(min['quantite'])+")")
